@@ -13,7 +13,7 @@ const initialState = {
 
 const useAppStore = create(
   persist(
-    (set, get) => ({
+    (set) => ({
       ...initialState,
 
       login: (userData) =>

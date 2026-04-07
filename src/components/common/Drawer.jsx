@@ -22,11 +22,6 @@ const Drawer = ({ isOpen, onClose, title, children, position = 'right' }) => {
 
   if (!isOpen) return null
 
-  const positions = {
-    right: 'right-0 translate-x-0',
-    left: 'left-0 -translate-x-0',
-  }
-
   const animations = {
     right: 'animate-slide-up',
     left: 'animate-slide-up',

@@ -74,7 +74,7 @@ const OnboardingFlow = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 relative">
-            {onboardingSteps.map((step, index) => (
+            {onboardingSteps.map((step) => (
               <StepCard
                 key={step.step}
                 step={step}

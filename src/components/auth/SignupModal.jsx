@@ -22,6 +22,7 @@ import useAppStore from '../../contexts/AppContext'
  * @param {{isOpen:boolean, onClose:()=>void, preselectedPlan: Plan|null}} props
  */
 const SignupModal = ({ isOpen, onClose, preselectedPlan = null }) => {
+  'use no memo'
   const [isLoading, setIsLoading] = useState(false)
   const {
     register,
