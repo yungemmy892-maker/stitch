@@ -1,6 +1,6 @@
-# Stitch - Modern Fintech Application
+# Stitch
 
-A production-ready fintech application built with React, TypeScript, and Vite, featuring authentication, transaction management, professional dark/light themes, and a beautiful animated dashboard.
+A fintech application built with React, TypeScript, and Vite, featuring authentication, transaction management, professional dark/light themes, and a beautiful animated dashboard.
 
 ![Stitch Finance](https://img.shields.io/badge/React-19.2.4-blue) ![Vite](https://img.shields.io/badge/Vite-8.0.4-purple) ![Tailwind](https://img.shields.io/badge/Tailwind-4.2.2-cyan) ![Zustand](https://img.shields.io/badge/Zustand-5.0.12-green)
 
