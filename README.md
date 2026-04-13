@@ -611,11 +611,6 @@ Zustand is used for global state management with the following stores:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 📞 Support
-
-- **Email**: support@stitchfinance.com
-- **Documentation**: [docs.stitchfinance.com](https://docs.stitchfinance.com)
-- **Discord**: [Join our community](https://discord.gg/stitchfinance)
 
 ## 🙏 Acknowledgments
 
@@ -626,4 +621,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Built with ❤️ by the Stitch Finance team**
+**Built with ❤️ by the me**
