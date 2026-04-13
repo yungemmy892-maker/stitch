@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
+import { ariaLabels, keyboardNav, focusManager } from '../../utils/accessibility'
 
 const Button = ({
   children,
@@ -9,8 +10,30 @@ const Button = ({
   onClick,
   className = '',
   type = 'button',
+  ariaLabel,
+  ariaDescribedBy,
+  ariaPressed,
+  ariaExpanded,
+  title,
   ...props
 }) => {
+  const buttonRef = useRef(null)
+
+  // Announce loading state to screen readers
+  useEffect(() => {
+    if (isLoading && buttonRef.current) {
+      focusManager.announce(`${children} is loading`)
+    }
+  }, [isLoading, children])
+
+  // Handle keyboard activation
+  const handleKeyDown = (e) => {
+    if (keyboardNav.isActivationKey(e)) {
+      e.preventDefault()
+      onClick?.(e)
+    }
+  }
+
   const variants = {
     primary: 'gradient-bg text-white shadow-lg hover:shadow-xl hover:shadow-blue-500/25 transform hover:-translate-y-0.5 active:translate-y-0',
     secondary: 'bg-white border-2 border-gray-200 text-gray-700 hover:border-blue-300 hover:bg-blue-50/50 shadow-md hover:shadow-lg backdrop-blur-sm',
@@ -27,8 +50,10 @@ const Button = ({
 
   return (
     <button
+      ref={buttonRef}
       type={type}
       onClick={onClick}
+      onKeyDown={handleKeyDown}
       disabled={disabled || isLoading}
       className={`
         ${variants[variant]}
@@ -39,10 +64,16 @@ const Button = ({
         active:transform active:translate-y-0
         ${className}
       `}
+      aria-label={ariaLabel || (typeof children === 'string' ? children : 'Button')}
+      aria-describedby={ariaDescribedBy}
+      aria-pressed={ariaPressed}
+      aria-expanded={ariaExpanded}
+      aria-busy={isLoading}
+      title={title || (typeof children === 'string' ? children : undefined)}
       {...props}
     >
       {isLoading ? (
-        <div className="flex items-center justify-center gap-3">
+        <div className="flex items-center justify-center gap-3" aria-hidden="false">
           <div className="relative">
             <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
             <div className="absolute inset-0 w-4 h-4 border-2 border-transparent border-t-white rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '0.6s' }} />

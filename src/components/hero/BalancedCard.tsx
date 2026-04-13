@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { transactionsData } from '../../data/mockData'
-import { TrendingUp, Eye, EyeOff } from 'lucide-react'
+import { TrendingUp, Eye, EyeOff, Wallet } from 'lucide-react'
 
 const BalanceCard = () => {
   const totalBalance = transactionsData.reduce((sum, tx) => sum + tx.amount, 0)
@@ -29,62 +29,80 @@ const BalanceCard = () => {
     return isVisible ? `$${balance.toLocaleString()}` : '••••••'
   }
 
+  const monthlyGrowth = 12.5
+  const thisMonthSpending = 2847
+
   return (
     <div className="glass-card rounded-3xl p-8 hover-lift border-0 relative overflow-hidden group">
-      {/* Background gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
       {/* Animated background elements */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-xl animate-float" />
-      <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-xl animate-float" style={{ animationDelay: '1s' }} />
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-2xl animate-float opacity-70" />
+      <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-2xl animate-float opacity-70" style={{ animationDelay: '2s' }} />
 
       <div className="relative z-10">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 gradient-bg rounded-2xl flex items-center justify-center shadow-lg">
-              <TrendingUp size={24} className="text-white" />
+        {/* Header with icon and visibility toggle */}
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 gradient-bg rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+              <Wallet size={28} className="text-white" />
             </div>
             <div>
-              <p className="text-sm text-gray-500 font-medium">Total Balance</p>
-              <div className="flex items-center gap-1 text-green-600 text-sm">
-                <TrendingUp size={14} />
-                <span className="font-medium">+12.5% this month</span>
-              </div>
+              <p className="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-widest">Your Account</p>
+              <p className="text-sm text-gray-600 dark:text-gray-300 font-medium mt-1">Primary Wallet</p>
             </div>
           </div>
 
           <button
             onClick={() => setIsVisible(!isVisible)}
-            className="p-2 hover:bg-gray-100 rounded-xl transition-colors duration-200"
+            className="p-3 bg-white dark:bg-dark-800 hover:bg-gray-100 dark:hover:bg-dark-700 border border-gray-200 dark:border-gray-700 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md"
             aria-label={isVisible ? 'Hide balance' : 'Show balance'}
           >
             {isVisible ? (
-              <Eye size={20} className="text-gray-500" />
+              <Eye size={20} className="text-primary-600 dark:text-primary-400" />
             ) : (
-              <EyeOff size={20} className="text-gray-500" />
+              <EyeOff size={20} className="text-primary-600 dark:text-primary-400" />
             )}
           </button>
         </div>
 
-        <div className="mb-6">
-          <h2 className="text-5xl md:text-6xl font-bold text-gray-900 animate-counter mb-2">
+        {/* Main balance display */}
+        <div className="mb-8 space-y-2">
+          <p className="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-widest">Total Balance</p>
+          <h2 className="text-6xl md:text-7xl font-bold text-gray-900 dark:text-white animate-counter">
             {formatBalance(displayBalance)}
           </h2>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-            <p className="text-sm text-gray-500">Updated just now</p>
+          <div className="flex items-center gap-3">
+            <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse" />
+            <p className="text-sm text-gray-600 dark:text-gray-400">Updated just now</p>
           </div>
         </div>
 
-        {/* Quick stats */}
-        <div className="grid grid-cols-2 gap-4 pt-6 border-t border-gray-100/50">
-          <div className="text-center">
-            <p className="text-xs text-gray-500 uppercase tracking-wide">This Month</p>
-            <p className="text-lg font-semibold text-green-600">+$2,847</p>
+        {/* Growth indicator */}
+        <div className="mb-6 p-4 bg-gradient-to-r from-green-50/80 to-emerald-50/80 dark:from-green-950/30 dark:to-emerald-950/30 rounded-xl border border-green-200/50 dark:border-green-900/50">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <TrendingUp size={18} className="text-green-600 dark:text-green-400" />
+              <span className="text-sm font-semibold text-green-700 dark:text-green-300">
+                +{monthlyGrowth}% this month
+              </span>
+            </div>
+            <span className="text-xs font-bold text-green-700 dark:text-green-400 uppercase tracking-wide">Growth</span>
           </div>
-          <div className="text-center">
-            <p className="text-xs text-gray-500 uppercase tracking-wide">Available</p>
-            <p className="text-lg font-semibold text-gray-900">{formatBalance(displayBalance)}</p>
+        </div>
+
+        {/* Stats breakdown */}
+        <div className="grid grid-cols-2 gap-4 p-4 bg-gray-50/50 dark:bg-dark-800/30 rounded-xl border border-gray-200/50 dark:border-gray-700/50">
+          <div>
+            <p className="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wide mb-2">This Month</p>
+            <p className="text-lg md:text-xl font-bold text-green-600 dark:text-green-400">
+              +${thisMonthSpending.toLocaleString()}
+            </p>
+          </div>
+          <div>
+            <p className="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wide mb-2">Available</p>
+            <p className="text-lg md:text-xl font-bold text-gray-900 dark:text-white">
+              {formatBalance(displayBalance)}
+            </p>
           </div>
         </div>
       </div>
